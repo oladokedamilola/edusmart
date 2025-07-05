@@ -1,0 +1,33 @@
+{% extends 'base_admin.html' %}
+{% block title %}Pending Grades{% endblock %}
+{% block content %}
+<h2 class="mb-4">Pending Grades for Approval</h2>
+<table class="table table-bordered table-hover">
+  <thead class="table-light">
+    <tr>
+      <th>Student</th>
+      <th>Course</th>
+      <th>Score</th>
+      <th>Grade</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for grade in grades %}
+    <tr>
+      <td>{{ grade.enrollment.student.matric_number }}</td>
+      <td>{{ grade.enrollment.course.code }}</td>
+      <td>{{ grade.score }}</td>
+      <td>{{ grade.grade }}</td>
+      <td>
+        <a href="{% url 'approve-grade' grade.id %}" class="btn btn-success btn-sm">Approve</a>
+      </td>
+    </tr>
+    {% empty %}
+    <tr>
+      <td colspan="5" class="text-center">No pending grades found.</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'base_user.html' %}
+{% block title %}Post Course Announcement{% endblock %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Post Announcement to Students</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Post</button>
+  </form>
+</div>
+{% endblock %}

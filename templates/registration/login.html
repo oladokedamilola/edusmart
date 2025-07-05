@@ -1,0 +1,71 @@
+{% extends 'base_general.html' %}
+{% load form_tags %}
+{% load static %}
+
+{% block title %}Login | EduSmart{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+  <div class="col-md-6 col-lg-5">
+    <div class="card shadow-sm rounded-lg">
+      <div class="card-body">
+        <h3 class="text-center text-purple mb-4">Login to Your Account</h3>
+        
+        <form method="POST" novalidate>
+          {% csrf_token %}
+          
+          <!-- Flash Messages -->
+          {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+              {{ form.non_field_errors }}
+            </div>
+          {% endif %}
+          
+          <div class="mb-3">
+            <label for="username" class="form-label">ID Number</label>
+            {{ form.username|add_class:"form-control" }}
+          </div>
+
+          <div class="mb-3 position-relative">
+            <label for="password" class="form-label">Password</label>
+            <div class="input-group">
+              {{ form.password|add_class:"form-control" }}
+              <button type="button" class="btn btn-outline-secondary" id="togglePassword">
+                <i class="fa fa-eye" id="toggleIcon"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="d-grid mt-4">
+            <button type="submit" class="btn btn-primary">Login</button>
+          </div>
+
+          <p class="text-center mt-3">
+            Don't have an account? <a href="{% url 'verify_id' %}">Register here</a>
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  const toggleBtn = document.getElementById('togglePassword');
+  const icon = document.getElementById('toggleIcon');
+  const passwordInput = document.querySelector('input[name="password"]');
+  
+  toggleBtn.addEventListener('click', () => {
+    const type = passwordInput.type === "password" ? "text" : "password";
+    passwordInput.type = type;
+    icon.classList.toggle('fa-eye');
+    icon.classList.toggle('fa-eye-slash');
+  });
+</script>
+{% endblock %}
+
+
+{% block footer %}
+
+{% endblock footer %}

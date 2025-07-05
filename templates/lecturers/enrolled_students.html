@@ -1,0 +1,29 @@
+{% extends 'base_user.html' %}
+{% block title %}Enrolled Students{% endblock %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Enrolled Students for {{ course.code }} - {{ course.title }}</h2>
+  <table class="table table-striped mt-3">
+    <thead class="table-light">
+      <tr>
+        <th>Matric Number</th>
+        <th>Full Name</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for enrollment in enrollments %}
+      <tr>
+        <td>{{ enrollment.student.matric_number }}</td>
+        <td>{{ enrollment.student.full_name }}</td>
+        <td>{{ enrollment.student.user.email }}</td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="3" class="text-center">No students enrolled in this course.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

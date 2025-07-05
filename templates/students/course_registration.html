@@ -1,0 +1,67 @@
+{% extends 'base_user.html' %}
+{% block title %}Register for Courses{% endblock %}
+{% block content %}
+
+<div class="container mt-4">
+  <!-- Header -->
+  <div class="mb-4">
+    <h3 class="fw-bold text-primary"><i class="fas fa-book-reader me-2"></i>Course Registration</h3>
+    <p class="text-muted">Select and register for your courses below.</p>
+  </div>
+
+  <!-- Course Table -->
+  <div class="table-responsive">
+    <table class="table table-hover table-bordered align-middle shadow-sm">
+      <thead class="table-light">
+        <tr>
+          <th scope="col">Course Code</th>
+          <th scope="col">Title</th>
+          <th scope="col">Unit</th>
+          <th scope="col">Semester</th>
+          <th scope="col">Status</th>
+          <th scope="col" class="text-center">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for course in available_courses %}
+        <tr>
+          <td class="fw-semibold text-dark">{{ course.code }}</td>
+          <td>{{ course.title }}</td>
+          <td>{{ course.unit }}</td>
+          <td>{{ course.get_semester_display }}</td>
+          <td>
+            {% if course.id in registered_courses %}
+              <span class="badge bg-success">Registered</span>
+            {% else %}
+              <span class="badge bg-secondary">Not Registered</span>
+            {% endif %}
+          </td>
+          <td class="text-center">
+            <form method="post" class="d-inline">
+              {% csrf_token %}
+              <input type="hidden" name="course_id" value="{{ course.id }}">
+              {% if course.id in registered_courses %}
+                <input type="hidden" name="action" value="drop">
+                <button class="btn btn-sm btn-outline-danger" title="Drop Course">
+                  <i class="fas fa-times-circle me-1"></i> Drop
+                </button>
+              {% else %}
+                <input type="hidden" name="action" value="register">
+                <button class="btn btn-sm btn-outline-primary" title="Register Course">
+                  <i class="fas fa-check-circle me-1"></i> Register
+                </button>
+              {% endif %}
+            </form>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="6" class="text-center text-muted">No available courses to register.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}

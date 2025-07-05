@@ -1,0 +1,155 @@
+{% extends 'base_general.html' %}
+{% load form_tags %}
+{% load static %}
+
+{% block title %}Create Account | EduSmart{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+  <div class="col-md-6 col-lg-5">
+    <div class="card shadow-sm rounded-lg">
+
+      <!-- ✅ Welcome Card -->
+      {% if first_name and user_type %}
+      <div class="card text-white bg-primary mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Welcome, {{ first_name }} 👋</h5>
+          <p class="card-text">
+            You're registering as a <strong>{{ user_type|title }}</strong>. Please complete your account setup below.
+          </p>
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="card-body">
+        <h3 class="text-center text-purple mb-4">Create Account</h3>
+
+        <!-- ✅ Flash Messages -->
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show custom-alert" role="alert">
+              {{ message }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+          {% endfor %}
+        {% endif %}
+
+        <form method="POST" novalidate>
+          {% csrf_token %}
+
+<!-- Password 1 Field -->
+<div class="mb-3 position-relative">
+  <label for="{{ form.password1.id_for_label }}" class="form-label">Password</label>
+  <div class="input-group">
+    {{ form.password1|add_class:"form-control" }}
+    <button type="button" class="btn btn-outline-secondary" id="togglePassword1">
+      <i class="fa fa-eye" id="iconPassword1"></i>
+    </button>
+  </div>
+  {% if form.password1.errors %}
+    <div class="text-danger small">{{ form.password1.errors|striptags }}</div>
+  {% endif %}
+
+  <!-- Password criteria -->
+  <div id="passwordHelp" class="form-text mt-2">
+    <strong>Password must:</strong>
+    <ul class="list-unstyled small ps-3" id="passwordCriteria">
+      <li id="length" class="text-danger">❌ Be at least 8 characters</li>
+      <li id="uppercase" class="text-danger">❌ Include an uppercase letter</li>
+      <li id="lowercase" class="text-danger">❌ Include a lowercase letter</li>
+      <li id="digit" class="text-danger">❌ Include a number</li>
+      <li id="special" class="text-danger">❌ Include a special character (!@#$...)</li>
+    </ul>
+  </div>
+</div>
+
+
+          <!-- Password 2 Field -->
+          <div class="mb-3 position-relative">
+            <label for="{{ form.password2.id_for_label }}" class="form-label">Confirm Password</label>
+            <div class="input-group">
+              {{ form.password2|add_class:"form-control" }}
+              <button type="button" class="btn btn-outline-secondary" id="togglePassword2">
+                <i class="fa fa-eye" id="iconPassword2"></i>
+              </button>
+            </div>
+            {% if form.password2.errors %}
+              <div class="text-danger small">{{ form.password2.errors|striptags }}</div>
+            {% endif %}
+          </div>
+
+          <!-- Submit Button -->
+          <div class="d-grid">
+            <button class="btn btn-success w-100">Create Account</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<!-- ✅ Font Awesome (if not already in base template) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js" crossorigin="anonymous"></script>
+
+<!-- ✅ Password Toggle Script -->
+<script>
+  function setupPasswordToggle(toggleBtnId, inputName, iconId) {
+    const toggleBtn = document.getElementById(toggleBtnId);
+    const icon = document.getElementById(iconId);
+    const passwordInput = document.querySelector(`input[name="${inputName}"]`);
+
+    toggleBtn.addEventListener('click', () => {
+      const type = passwordInput.type === "password" ? "text" : "password";
+      passwordInput.type = type;
+      icon.classList.toggle('fa-eye');
+      icon.classList.toggle('fa-eye-slash');
+    });
+  }
+
+  setupPasswordToggle('togglePassword1', 'password1', 'iconPassword1');
+  setupPasswordToggle('togglePassword2', 'password2', 'iconPassword2');
+</script>
+
+<!-- ✅ Flash Message Auto-Dismiss -->
+<script>
+  setTimeout(() => {
+    const alerts = document.querySelectorAll('.custom-alert');
+    alerts.forEach(alert => {
+      const bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
+      bsAlert.close();
+    });
+  }, 7000);
+</script>
+
+<script>
+  // Real-time password validation for password1
+  const passwordInput = document.querySelector('input[name="password1"]');
+  const criteria = {
+    length: { check: (v) => v.length >= 8 },
+    uppercase: { check: (v) => /[A-Z]/.test(v) },
+    lowercase: { check: (v) => /[a-z]/.test(v) },
+    digit: { check: (v) => /\d/.test(v) },
+    special: { check: (v) => /[!@#$%^&*(),.?":{}|<>]/.test(v) }
+  };
+
+  passwordInput.addEventListener('input', () => {
+    const val = passwordInput.value;
+
+    Object.keys(criteria).forEach(key => {
+      const item = document.getElementById(key);
+      if (criteria[key].check(val)) {
+        item.classList.remove('text-danger');
+        item.classList.add('text-success');
+        item.textContent = `✅ ${item.textContent.slice(2)}`;
+      } else {
+        item.classList.remove('text-success');
+        item.classList.add('text-danger');
+        item.textContent = `❌ ${item.textContent.slice(2)}`;
+      }
+    });
+  });
+</script>
+
+{% endblock %}

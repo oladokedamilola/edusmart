@@ -1,0 +1,49 @@
+{% extends 'base_user.html' %}
+{% block title %}My Teaching Timetable{% endblock %}
+{% block content %}
+
+<div class="container mt-4">
+  <!-- Page Header -->
+  <div class="mb-4 d-flex justify-content-between align-items-center">
+    <h2 class="fw-bold text-primary mb-0">
+      <i class="fas fa-calendar-alt me-2"></i>My Teaching Timetable
+    </h2>
+    <span class="text-muted">{{ user.get_full_name }}</span>
+  </div>
+
+  {% if grouped_timetable %}
+    {% for day, entries in grouped_timetable.items %}
+      <div class="mt-4">
+        <h5 class="text-uppercase fw-semibold">{{ day }}</h5>
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover shadow-sm">
+            <thead class="table-light">
+              <tr>
+                <th>Time</th>
+                <th>Course Code</th>
+                <th>Course Title</th>
+                <th>Venue</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for entry in entries %}
+              <tr>
+                <td>{{ entry.time|time:"h:i A" }}</td>
+                <td class="fw-bold text-primary">{{ entry.course.code }}</td>
+                <td>{{ entry.course.title }}</td>
+                <td><i class="fas fa-map-marker-alt me-1 text-danger"></i>{{ entry.venue }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <div class="alert alert-info mt-4 text-center">
+      <i class="fas fa-info-circle me-2"></i>No teaching timetable available yet.
+    </div>
+  {% endif %}
+</div>
+
+{% endblock %}

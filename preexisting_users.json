@@ -1,0 +1,206 @@
+{
+  "students": [
+    {
+      "matric_number": "202012345",
+      "first_name": "Aisha",
+      "middle_name": "Tunde",
+      "last_name": "Bello",
+      "faculty": "Science",
+      "department": "Computer Science",
+      "email": "aisha.bello@student.university.edu",
+      "dob": "2001-05-14",
+      "year_of_entry": 2020
+    },
+    {
+      "matric_number": "201934782",
+      "first_name": "John",
+      "middle_name": "Ola",
+      "last_name": "Doe",
+      "faculty": "Engineering",
+      "department": "Mechanical Engineering",
+      "email": "john.doe@student.university.edu",
+      "dob": "2000-11-22",
+      "year_of_entry": 2019
+    },
+    {
+      "matric_number": "202134567",
+      "first_name": "Fatima",
+      "middle_name": "Zainab",
+      "last_name": "Ahmed",
+      "faculty": "Arts",
+      "department": "English",
+      "email": "fatima.ahmed@student.university.edu",
+      "dob": "2002-07-10",
+      "year_of_entry": 2021
+    },
+    {
+      "matric_number": "201845932",
+      "first_name": "David",
+      "middle_name": "Ifeanyi",
+      "last_name": "Ogun",
+      "faculty": "Social Sciences",
+      "department": "Economics",
+      "email": "david.ogun@student.university.edu",
+      "dob": "1999-03-05",
+      "year_of_entry": 2018
+    },
+    {
+      "matric_number": "202034879",
+      "first_name": "Maryam",
+      "middle_name": "Halima",
+      "last_name": "Yusuf",
+      "faculty": "Science",
+      "department": "Computer Science",
+      "email": "maryam.yusuf@student.university.edu",
+      "dob": "2001-09-30",
+      "year_of_entry": 2020
+    },
+    {
+      "matric_number": "202145698",
+      "first_name": "Emmanuel",
+      "middle_name": "Tobi",
+      "last_name": "Okoro",
+      "faculty": "Engineering",
+      "department": "Mechanical Engineering",
+      "email": "emmanuel.okoro@student.university.edu",
+      "dob": "2000-01-12",
+      "year_of_entry": 2021
+    },
+    {
+      "matric_number": "201954321",
+      "first_name": "Ngozi",
+      "middle_name": "Ada",
+      "last_name": "Ibe",
+      "faculty": "Arts",
+      "department": "English",
+      "email": "ngozi.ibe@student.university.edu",
+      "dob": "2002-11-02",
+      "year_of_entry": 2019
+    },
+    {
+      "matric_number": "202134124",
+      "first_name": "Umar",
+      "middle_name": "Kabir",
+      "last_name": "Sani",
+      "faculty": "Science",
+      "department": "Computer Science",
+      "email": "umar.sani@student.university.edu",
+      "dob": "2003-04-17",
+      "year_of_entry": 2021
+    },
+    {
+      "matric_number": "202045911",
+      "first_name": "Chidera",
+      "middle_name": "Nneka",
+      "last_name": "Obi",
+      "faculty": "Social Sciences",
+      "department": "Economics",
+      "email": "chidera.obi@student.university.edu",
+      "dob": "2001-08-20",
+      "year_of_entry": 2020
+    },
+    {
+      "matric_number": "201867532",
+      "first_name": "Samuel",
+      "middle_name": "Kehinde",
+      "last_name": "Ade",
+      "faculty": "Engineering",
+      "department": "Mechanical Engineering",
+      "email": "samuel.ade@student.university.edu",
+      "dob": "2000-06-06",
+      "year_of_entry": 2018
+    }
+  ],
+  "lecturers": [
+    {
+      "staff_id": "STF1001",
+      "first_name": "Grace",
+      "middle_name": "Ade",
+      "last_name": "Okon",
+      "faculty": "Arts",
+      "department": "English",
+      "email": "grace.okon@university.edu"
+    },
+    {
+      "staff_id": "STF1002",
+      "first_name": "Michael",
+      "middle_name": "Uche",
+      "last_name": "Eze",
+      "faculty": "Social Sciences",
+      "department": "Economics",
+      "email": "michael.eze@university.edu"
+    },
+    {
+      "staff_id": "STF1003",
+      "first_name": "Helen",
+      "middle_name": "Ngozi",
+      "last_name": "Abubakar",
+      "faculty": "Science",
+      "department": "Computer Science",
+      "email": "helen.abubakar@university.edu"
+    },
+    {
+      "staff_id": "STF1004",
+      "first_name": "Peter",
+      "middle_name": "Ikenna",
+      "last_name": "Okafor",
+      "faculty": "Engineering",
+      "department": "Mechanical Engineering",
+      "email": "peter.okafor@university.edu"
+    },
+    {
+      "staff_id": "STF1005",
+      "first_name": "Zainab",
+      "middle_name": "Bilkisu",
+      "last_name": "Yahaya",
+      "faculty": "Arts",
+      "department": "English",
+      "email": "zainab.yahaya@university.edu"
+    },
+    {
+      "staff_id": "STF1006",
+      "first_name": "Bashir",
+      "middle_name": "Abdullahi",
+      "last_name": "Garba",
+      "faculty": "Social Sciences",
+      "department": "Economics",
+      "email": "bashir.garba@university.edu"
+    },
+    {
+      "staff_id": "STF1007",
+      "first_name": "Chinwe",
+      "middle_name": "Onyeka",
+      "last_name": "Nwachukwu",
+      "faculty": "Engineering",
+      "department": "Mechanical Engineering",
+      "email": "chinwe.nwachukwu@university.edu"
+    },
+    {
+      "staff_id": "STF1008",
+      "first_name": "Yusuf",
+      "middle_name": "Salisu",
+      "last_name": "Ibrahim",
+      "faculty": "Science",
+      "department": "Computer Science",
+      "email": "yusuf.ibrahim@university.edu"
+    },
+    {
+      "staff_id": "STF1009",
+      "first_name": "Tolu",
+      "middle_name": "Adewale",
+      "last_name": "Ogunleye",
+      "faculty": "Arts",
+      "department": "English",
+      "email": "tolu.ogunleye@university.edu"
+    },
+    {
+      "staff_id": "STF1010",
+      "first_name": "Sandra",
+      "middle_name": "Onome",
+      "last_name": "Idowu",
+      "faculty": "Social Sciences",
+      "department": "Economics",
+      "email": "sandra.idowu@university.edu"
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{% extends 'base_user.html' %}
+{% block title %}My Timetable{% endblock %}
+{% block content %}
+
+<div class="container mt-4">
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold text-primary"><i class="fas fa-calendar-alt me-2"></i>My Timetable</h2>
+    <span class="text-muted">Academic Session: {{ current_session }}</span>
+  </div>
+
+  <!-- Timetable Table -->
+  {% if grouped_timetable %}
+    {% for day, entries in grouped_timetable.items %}
+      <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-light fw-semibold">
+          <i class="fas fa-clock me-2 text-secondary"></i>{{ day|title }}
+        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-striped mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th scope="col">Time</th>
+                  <th scope="col">Course Code</th>
+                  <th scope="col">Course Title</th>
+                  <th scope="col">Venue</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for entry in entries %}
+                  <tr>
+                    <td>{{ entry.time|time:"h:i A" }}</td>
+                    <td><strong>{{ entry.course.code }}</strong></td>
+                    <td>{{ entry.course.title }}</td>
+                    <td>{{ entry.venue }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <div class="alert alert-info text-center">
+      <i class="fas fa-info-circle me-1"></i> No timetable available yet.
+    </div>
+  {% endif %}
+</div>
+
+{% endblock %}

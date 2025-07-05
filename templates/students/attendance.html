@@ -1,0 +1,39 @@
+{% extends 'base_user.html' %}
+{% block title %}Attendance Records{% endblock %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Attendance Records</h2>
+
+  {% for course, records in attendance_by_course.items %}
+    <div class="card mb-3">
+      <div class="card-header"><strong>{{ course.code }} - {{ course.title }}</strong></div>
+      <div class="card-body p-0">
+        <table class="table table-bordered mb-0">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for rec in records %}
+            <tr>
+              <td>{{ rec.date }}</td>
+              <td>
+                {% if rec.status == 'present' %}
+                  <span class="text-success">Present</span>
+                {% else %}
+                  <span class="text-danger">Absent</span>
+                {% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  {% empty %}
+    <div class="alert alert-info">No attendance records available yet.</div>
+  {% endfor %}
+</div>
+{% endblock %}

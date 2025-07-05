@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Admin Panel{% endblock %} | Student Management System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Django Admin-like Styling via Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .admin-header {
+      background-color: #0c4b33;
+      color: white;
+      padding: 10px 20px;
+    }
+    .admin-header a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .admin-sidebar {
+      background-color: #f0f0f0;
+      min-height: 100vh;
+      padding: 20px 10px;
+      border-right: 1px solid #ccc;
+    }
+    .admin-sidebar a {
+      display: block;
+      padding: 10px;
+      color: #000;
+      text-decoration: none;
+      margin-bottom: 5px;
+      border-radius: 4px;
+    }
+    .admin-sidebar a:hover {
+      background-color: #e4e4e4;
+    }
+    .admin-content {
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="admin-header d-flex justify-content-between align-items-center">
+    <div>
+      <a href="{% url 'admin-dashboard' %}">🎓 Student Management Admin</a>
+    </div>
+    <div>
+      <a href="/admin/" class="me-3">Django Admin</a>
+      <a href="{% url 'logout' %}">Logout</a>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-md-2 admin-sidebar">
+        <h6 class="text-muted">Navigation</h6>
+        <a href="{% url 'admin-dashboard' %}">📊 Dashboard</a>
+        <a href="{% url 'assign_courses' %}">👨‍🏫 Assign Courses</a>
+        <a href="{% url 'pending-grades' %}">📝 Pending Grades</a>
+        <a href="{% url 'post_announcement' %}">📢 Post Announcement</a>
+        <a href="{% url 'timetable-manager' %}">🗓️ Timetable Manager</a>
+        <a href="{% url 'course-list' %}">📚 Course List</a>
+        <a href="{% url 'student-report' %}">📈 Student Report</a>
+        <a href="/admin/">⚙️ Django Admin</a>
+      </div>
+
+      <!-- Main Content -->
+      <div class="col-md-10 admin-content">
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+          {% endfor %}
+        {% endif %}
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

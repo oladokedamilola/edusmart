@@ -1,0 +1,43 @@
+{% extends 'base_user.html' %}
+{% block title %}Send Feedback{% endblock %}
+{% block content %}
+
+<div class="container mt-4 mb-5">
+  <!-- Header -->
+  <div class="mb-4">
+    <h3 class="fw-bold text-primary">
+      <i class="fas fa-paper-plane me-2"></i>Send Message / Feedback
+    </h3>
+    <p class="text-muted">We’d love to hear your thoughts or concerns.</p>
+  </div>
+
+  <!-- Form -->
+  <div class="card shadow-sm border-0">
+    <div class="card-body">
+      <form method="post" novalidate>
+        {% csrf_token %}
+        
+        {% for field in form %}
+          <div class="mb-3">
+            <label class="form-label fw-semibold">{{ field.label }}</label>
+            {{ field }}
+            {% if field.help_text %}
+              <div class="form-text">{{ field.help_text }}</div>
+            {% endif %}
+            {% for error in field.errors %}
+              <div class="text-danger small">{{ error }}</div>
+            {% endfor %}
+          </div>
+        {% endfor %}
+
+        <div class="text-end">
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-paper-plane me-1"></i> Send Message
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

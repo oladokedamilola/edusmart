@@ -1,0 +1,41 @@
+{% extends 'base_user.html' %}
+{% block title %}Course Materials{% endblock %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Materials for {{ course.code }} - {{ course.title }}</h2>
+
+  <form method="get" class="row g-2 mb-3">
+  <div class="col-md-4">
+    <select name="type" class="form-select">
+      <option value="">Filter by Type</option>
+      <option value="pdf" {% if file_type == 'pdf' %}selected{% endif %}>PDF</option>
+      <option value="pptx" {% if file_type == 'pptx' %}selected{% endif %}>PowerPoint</option>
+      <option value="docx" {% if file_type == 'docx' %}selected{% endif %}>Word</option>
+    </select>
+  </div>
+  <div class="col-md-4">
+    <input type="text" name="session" class="form-control" placeholder="e.g. 2024/2025" value="{{ session_filter }}">
+  </div>
+  <div class="col-md-4">
+    <button type="submit" class="btn btn-outline-primary">Apply Filters</button>
+  </div>
+</form>
+
+
+  {% if materials %}
+  <ul class="list-group mt-3">
+    {% for material in materials %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <div>
+        <strong>{{ material.title }}</strong><br>
+        <small>Uploaded on {{ material.uploaded_at|date:"M d, Y" }}</small>
+      </div>
+      <a href="{{ material.file.url }}" class="btn btn-sm btn-outline-primary" download>Download</a>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+    <div class="alert alert-info mt-3">No materials uploaded yet for this course.</div>
+  {% endif %}
+</div>
+{% endblock %}

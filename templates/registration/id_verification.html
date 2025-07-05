@@ -1,0 +1,36 @@
+{% extends "base_general.html" %}
+{% load form_tags %}
+{% block title %}Verify ID | EduSmart{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+  <div class="col-md-6 col-lg-5">
+    <div class="card shadow-sm rounded-lg">
+      <div class="card-body">
+        <h3 class="text-center text-purple mb-4">ID Verification</h3>
+
+        <form method="post" novalidate>
+          {% csrf_token %}
+          
+          <div class="mb-3">
+            <label class="form-label">{{ form.id_number.label }}</label>
+            {{ form.id_number|add_class:"form-control" }}
+            {% if form.id_number.errors %}
+              <div class="text-danger small">{{ form.id_number.errors|striptags }}</div>
+            {% endif %}
+          </div>
+
+          <div class="d-grid">
+            <button class="btn btn-primary w-100">Verify</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+
+{% block footer %}
+
+{% endblock footer %}

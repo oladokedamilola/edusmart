@@ -1,0 +1,24 @@
+{% extends 'base_user.html' %}
+{% block title %}My Announcements{% endblock %}
+{% block content %}
+<div class="container mt-4">
+  <h2 class="mb-3">My Announcements</h2>
+
+  {% if announcements %}
+  <ul class="list-group">
+    {% for ann in announcements %}
+    <li class="list-group-item">
+      <h5 class="mb-1">{{ ann.title }}</h5>
+      <small class="text-muted">Posted on {{ ann.created_at|date:"M d, Y @ h:i A" }}</small>
+      {% if ann.course %}
+        <div class="mt-1"><strong>Course:</strong> {{ ann.course.code }} - {{ ann.course.title }}</div>
+      {% endif %}
+      <p class="mb-0 mt-2">{{ ann.content|truncatewords:30 }}</p>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+    <div class="alert alert-info">You have not posted any announcements yet.</div>
+  {% endif %}
+</div>
+{% endblock %}

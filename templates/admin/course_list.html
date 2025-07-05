@@ -1,0 +1,32 @@
+{% extends 'base_admin.html' %}
+{% block title %}Courses Overview{% endblock %}
+{% block content %}
+<h2 class="mb-4">Courses Overview</h2>
+
+<table class="table table-bordered table-hover">
+  <thead class="table-light">
+    <tr>
+      <th>Code</th>
+      <th>Title</th>
+      <th>Unit</th>
+      <th>Semester</th>
+      <th>Level</th>
+      <th>Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for course in courses %}
+    <tr>
+      <td>{{ course.code }}</td>
+      <td>{{ course.title }}</td>
+      <td>{{ course.unit }}</td>
+      <td>{{ course.get_semester_display }}</td>
+      <td>{{ course.level }}</td>
+      <td>{{ course.get_course_type_display }}</td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="6" class="text-center">No courses available.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

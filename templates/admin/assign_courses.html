@@ -1,0 +1,10 @@
+{% extends 'base_admin.html' %}
+{% block title %}Assign Courses{% endblock %}
+{% block content %}
+<h2 class="mb-4">Assign Courses to Lecturer</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" class="btn btn-primary">Assign Courses</button>
+</form>
+{% endblock %}

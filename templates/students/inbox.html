@@ -1,0 +1,41 @@
+{% extends 'base_user.html' %}
+{% block title %}Inbox{% endblock %}
+{% block content %}
+
+<div class="container mt-4">
+  <!-- Page Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h3 class="fw-bold text-primary"><i class="fas fa-inbox me-2"></i>Inbox</h3>
+    <span class="badge bg-secondary">{{ messages|length }} Message{{ messages|length|pluralize }}</span>
+  </div>
+
+  <!-- Messages -->
+  {% if messages %}
+    <div class="row">
+      {% for m in messages %}
+      <div class="col-12 mb-3">
+        <div class="card shadow-sm border-0">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start">
+              <div>
+                <h5 class="card-title mb-1">{{ m.subject }}</h5>
+                <h6 class="card-subtitle text-muted">From <strong>{{ m.sender.username }}</strong> &bull; 
+                  <small>{{ m.sent_at|date:"M d, Y - H:i A" }}</small>
+                </h6>
+              </div>
+              <span class="badge bg-light text-muted">{{ forloop.counter }}</span>
+            </div>
+            <p class="card-text mt-3">{{ m.content }}</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="alert alert-info text-center" role="alert">
+      <i class="fas fa-envelope-open-text fa-lg me-2"></i> No messages yet.
+    </div>
+  {% endif %}
+</div>
+
+{% endblock %}

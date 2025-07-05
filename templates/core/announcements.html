@@ -1,0 +1,37 @@
+{% extends 'base_user.html' %}
+{% block title %}Announcements{% endblock %}
+{% block content %}
+
+<div class="container mt-4">
+  <!-- Page Heading -->
+  <div class="mb-4">
+    <h2 class="fw-bold text-primary">
+      <i class="fas fa-bullhorn me-2"></i>Announcements
+    </h2>
+    <p class="text-muted">Stay up to date with the latest news and updates.</p>
+  </div>
+
+  <!-- Announcement List -->
+  {% if announcements %}
+    {% for ann in announcements %}
+      <div class="card shadow-sm mb-4 border-0">
+        <div class="card-body">
+          <h5 class="card-title fw-semibold">{{ ann.title }}</h5>
+          <p class="card-text mt-2">{{ ann.content }}</p>
+          <div class="text-end">
+            <small class="text-muted">
+              <i class="fas fa-user me-1"></i>{{ ann.posted_by.username }} &middot; 
+              <i class="fas fa-clock me-1"></i>{{ ann.created_at|date:"M d, Y H:i" }}
+            </small>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <div class="alert alert-info text-center">
+      <i class="fas fa-info-circle me-2"></i>No announcements have been posted yet.
+    </div>
+  {% endif %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'base_user.html' %}
+{% block title %}Course Materials{% endblock %}
+{% block content %}
+<div class="container mt-4">
+  <h2>My Course Materials</h2>
+
+  {% if materials %}
+  <ul class="list-group mt-3">
+    {% for material in materials %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <div>
+        <strong>{{ material.title }}</strong><br>
+        <small>{{ material.course.code }} - {{ material.course.title }}</small><br>
+        <small class="text-muted">Uploaded: {{ material.uploaded_at|date:"M d, Y" }}</small>
+      </div>
+      <a href="{{ material.file.url }}" class="btn btn-sm btn-outline-primary" download>Download</a>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <div class="alert alert-info mt-3">No materials available yet.</div>
+  {% endif %}
+</div>
+{% endblock %}

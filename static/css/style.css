@@ -1,0 +1,151 @@
+/* ==== GOOGLE FONTS ==== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto&display=swap');
+
+/* ==== BASE STYLES ==== */
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #F8F8FF;
+  color: #2C2C2C;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Poppins', sans-serif;
+  color: #6C2DC7;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* ==== NAVBAR ==== */
+.navbar {
+  background-color: #6C2DC7;
+  padding: 0.8rem 1.5rem;
+}
+
+.navbar-brand,
+.nav-link {
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+.nav-link:hover {
+  color: #B19CD9 !important;
+}
+
+.nav-link {
+  transition: all 0.3s ease-in-out;
+}
+
+.nav-link:hover {
+  color: #f8e231 !important;
+  text-shadow: 0 0 5px rgba(248, 226, 49, 0.5);
+}
+
+/* ==== BUTTONS ==== */
+.btn-primary {
+  background-color: #6C2DC7;
+  border-color: #6C2DC7;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: #5A1EB7;
+  border-color: #5A1EB7;
+}
+
+.btn-secondary {
+  background-color: #708090;
+  border-color: #708090;
+  color: #fff;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+  color: #fff;
+}
+
+.btn-success {
+  background-color: #28a745;
+  border-color: #28a745;
+  color: #fff;
+}
+
+/* ==== CARDS ==== */
+.card {
+  border: none;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  margin-bottom: 1.5rem;
+}
+
+.card-header {
+  background-color: #6C2DC7;
+  color: #fff;
+  font-weight: 600;
+}
+
+.card-body {
+  padding: 1.25rem;
+}
+
+/* ==== FORMS ==== */
+.form-control {
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
+}
+
+.form-control:focus {
+  border-color: #6C2DC7;
+  box-shadow: 0 0 0 0.2rem rgba(108, 45, 199, 0.25);
+}
+
+/* ==== ALERTS ==== */
+.alert-primary {
+  background-color: #6C2DC7;
+  color: #fff;
+}
+
+.alert-success {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.alert-danger {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+/* ==== FOOTER ==== */
+.footer {
+  background-color: #6C2DC7;
+  color: #ffffff;
+  padding: 1rem 0;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+/* ==== UTILITY ==== */
+.text-purple {
+  color: #6C2DC7;
+}
+
+.bg-purple {
+  background-color: #6C2DC7;
+  color: #fff;
+}
+
+.rounded-lg {
+  border-radius: 0.75rem;
+}
+
+.shadow-sm {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}

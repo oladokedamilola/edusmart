@@ -1,0 +1,35 @@
+{% extends 'base_user.html' %}
+{% block title %}Assigned Courses{% endblock %}
+{% block content %}
+
+<div class="container mt-4">
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold text-primary">
+      <i class="fas fa-tasks me-2"></i>Courses Assigned to You
+    </h2>
+    <span class="text-muted">{{ user.get_full_name }}</span>
+  </div>
+
+  {% if courses %}
+    <div class="row g-3">
+      {% for course in courses %}
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm border-0 h-100">
+            <div class="card-body">
+              <h5 class="card-title fw-bold mb-1">{{ course.code }}</h5>
+              <p class="card-text text-muted mb-2">{{ course.title }}</p>
+              <span class="badge bg-secondary">{{ course.unit }} unit{{ course.unit|pluralize }}</span>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="alert alert-info text-center">
+      <i class="fas fa-info-circle me-2"></i> No courses have been assigned to you yet.
+    </div>
+  {% endif %}
+</div>
+
+{% endblock %}

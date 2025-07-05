@@ -1,0 +1,10 @@
+{% extends 'base_admin.html' %}
+{% block title %}Post Announcement{% endblock %}
+{% block content %}
+<h2 class="mb-4">Post a New Announcement</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" class="btn btn-primary">Post Announcement</button>
+</form>
+{% endblock %}
