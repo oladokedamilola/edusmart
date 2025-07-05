@@ -1,6 +1,6 @@
 ## 📘 `README.md` — *EduSmart Student Management System*
 
-````markdown
+
 # 🎓 EduSmart – Student Management System
 
 Welcome to **EduSmart**, a comprehensive web-based Student Management System designed to streamline academic administration for universities and institutions.
