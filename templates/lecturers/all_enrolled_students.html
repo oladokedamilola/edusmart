@@ -1,0 +1,56 @@
+{% extends 'base_user.html' %}
+{% block title %}Enrolled Students{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h3 class="mb-4">My Courses and Enrolled Students</h3>
+
+  {% if courses %}
+    {% for course in courses %}
+    <div class="card mb-5 shadow-sm">
+      <div class="row g-0">
+        <!-- Left: Course Details -->
+        <div class="col-md-4 bg-light p-3">
+          <h5>{{ course.title }}</h5>
+          <p class="text-muted">{{ course.code }} | {{ course.get_semester_display }} | {{ course.level }} Level</p>
+          <p><strong>Type:</strong> {{ course.get_course_type_display }}</p>
+          <p><strong>Unit:</strong> {{ course.unit }}</p>
+          <p><strong>Department:</strong> {{ course.department }}</p>
+          <p><strong>Faculty:</strong> {{ course.faculty }}</p>
+          <p><strong>Session:</strong> {{ course.session }}</p>
+          {% if course.description %}
+            <hr>
+            <p><strong>Description:</strong><br>{{ course.description }}</p>
+          {% endif %}
+        </div>
+
+        <!-- Right: Enrolled Students -->
+        <div class="col-md-8 p-3">
+          <h6 class="mb-3">Enrolled Students</h6>
+          {% if course.enrollments %}
+            <ul class="list-group">
+              {% for enrollment in course.enrollments %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <div>
+                    {{ enrollment.student.last_name }}, {{ enrollment.student.first_name }}<br>
+                    <small class="text-muted">Matric: {{ enrollment.student.matric_number }}</small>
+                  </div>
+                  <span class="badge bg-secondary">Registered: {{ enrollment.registered_at|date:"M d, Y" }}</span>
+                </li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <div class="alert alert-info">No students have enrolled for this course yet.</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  {% else %}
+    <div class="alert alert-warning text-center p-5">
+      <h4>No courses have been assigned to you yet.</h4>
+      <p class="mb-0">Once you’re assigned to a course, you’ll see enrolled students here.</p>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,10 +1,36 @@
 {% extends 'base_admin.html' %}
 {% block title %}Assign Courses{% endblock %}
+
 {% block content %}
-<h2 class="mb-4">Assign Courses to Lecturer</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit" class="btn btn-primary">Assign Courses</button>
-</form>
+<div class="container mt-4">
+  <h2 class="mb-4">Assign Courses to Lecturer</h2>
+  <form method="post" class="needs-validation" novalidate>
+    {% csrf_token %}
+
+    <!-- Lecturer Field -->
+    <div class="mb-3">
+      <label for="{{ form.lecturer.id_for_label }}" class="form-label">{{ form.lecturer.label }}</label>
+      {{ form.lecturer }}
+      {% if form.lecturer.errors %}
+        <div class="text-danger">{{ form.lecturer.errors }}</div>
+      {% endif %}
+    </div>
+
+    <!-- Courses Field -->
+    <div class="mb-3">
+      <label class="form-label d-block">{{ form.courses.label }}</label>
+      {% for checkbox in form.courses %}
+        <div class="form-check">
+          {{ checkbox.tag }}
+          <label class="form-check-label" for="{{ checkbox.id_for_label }}">{{ checkbox.choice_label }}</label>
+        </div>
+      {% endfor %}
+      {% if form.courses.errors %}
+        <div class="text-danger">{{ form.courses.errors }}</div>
+      {% endif %}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Assign Courses</button>
+  </form>
+</div>
 {% endblock %}

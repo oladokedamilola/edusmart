@@ -6,7 +6,10 @@ from lecturers.models import PreexistingLecturer
 from .forms import AccountCreationForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model
 
+
+User = get_user_model()
 
 def verify_id(request):
     if request.method == 'POST':
@@ -17,18 +20,30 @@ def verify_id(request):
             student = PreexistingStudent.objects.filter(matric_number=id_number).first()
             lecturer = PreexistingLecturer.objects.filter(staff_id=id_number).first()
 
+            # Check if ID is already linked to a user
             if student:
+                if User.objects.filter(preexistingstudent=student).exists():
+                    messages.warning(request, "This student ID is already linked to an account. Please log in.")
+                    return redirect('login')
+
                 request.session['user_type'] = 'student'
                 request.session['pre_id'] = student.matric_number
                 return redirect('create_account')
+
             elif lecturer:
+                if User.objects.filter(preexistinglecturer=lecturer).exists():
+                    messages.warning(request, "This lecturer ID is already linked to an account. Please log in.")
+                    return redirect('login')
+
                 request.session['user_type'] = 'lecturer'
                 request.session['pre_id'] = lecturer.staff_id
                 return redirect('create_account')
+
             else:
                 messages.error(request, "ID not found in our records.")
     else:
         form = IDVerificationForm()
+
     return render(request, 'registration/id_verification.html', {'form': form})
 
 
@@ -108,12 +123,22 @@ def login_view(request):
 
             if user is not None:
                 login(request, user)
+
+                # ✅ Check if the user is a superuser (admin)
+                if user.is_superuser:
+                    messages.success(request, 'Admin login successful. Welcome back!')
+                    return redirect('admin-dashboard')
+
+                # ✅ Continue with the regular user_type checks
                 if user.user_type == 'student':
                     messages.success(request, 'Login Successful. Welcome back! ')
                     return redirect('student_dashboard')
                 elif user.user_type == 'lecturer':
                     messages.success(request, 'Login Successful. Welcome back! ')
                     return redirect('lecturer_dashboard')
+                elif user.user_type == 'admin':
+                    messages.success(request, 'Login Successful. Welcome back! ')
+                    return redirect('admin-dashboard')
                 else:
                     messages.error(request, 'User type not recognized.')
                     return redirect('login')
@@ -125,6 +150,7 @@ def login_view(request):
         form = CustomAuthenticationForm()
 
     return render(request, 'registration/login.html', {'form': form})
+
 
 
 from django.contrib.auth import logout
@@ -166,3 +192,30 @@ def update_profile_image(request):
         form = ProfileImageForm(instance=request.user)
     return redirect(request.META.get('HTTP_REFERER', 'home'))
 
+
+@login_required
+def view_profile(request):
+    user = request.user
+
+    context = {
+        'user': user,
+        'user_type': user.user_type
+    }
+
+    if user.user_type == 'student':
+        try:
+            student = PreexistingStudent.objects.get(user=user)
+            context['profile'] = student
+        except PreexistingStudent.DoesNotExist:
+            messages.error(request, "Student profile not found.")
+            return redirect('home') 
+
+    elif user.user_type == 'lecturer':
+        try:
+            lecturer = PreexistingLecturer.objects.get(user=user)
+            context['profile'] = lecturer
+        except PreexistingLecturer.DoesNotExist:
+            messages.error(request, "Lecturer profile not found.")
+            return redirect('home')
+
+    return render(request, 'profile/view_profile.html', context)

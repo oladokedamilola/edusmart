@@ -1,4 +1,74 @@
 {
+  "faculties": [
+    { "name": "Science" },
+    { "name": "Engineering" },
+    { "name": "Arts" },
+    { "name": "Social Sciences" },
+    { "name": "Management Sciences" },
+    { "name": "Education" },
+    { "name": "Law" },
+    { "name": "Agriculture" },
+    { "name": "Environmental Sciences" },
+    { "name": "Medicine" }
+  ],
+  "departments": [
+    { "name": "Computer Science", "faculty": "Science" },
+    { "name": "Mathematics", "faculty": "Science" },
+    { "name": "Physics", "faculty": "Science" },
+    { "name": "Chemistry", "faculty": "Science" },
+    { "name": "Biological Sciences", "faculty": "Science" },
+
+    { "name": "Mechanical Engineering", "faculty": "Engineering" },
+    { "name": "Electrical and Electronics Engineering", "faculty": "Engineering" },
+    { "name": "Civil Engineering", "faculty": "Engineering" },
+    { "name": "Chemical Engineering", "faculty": "Engineering" },
+    { "name": "Systems Engineering", "faculty": "Engineering" },
+
+    { "name": "English", "faculty": "Arts" },
+    { "name": "History and Strategic Studies", "faculty": "Arts" },
+    { "name": "Philosophy", "faculty": "Arts" },
+    { "name": "Linguistics and African Languages", "faculty": "Arts" },
+    { "name": "Theatre Arts", "faculty": "Arts" },
+
+    { "name": "Economics", "faculty": "Social Sciences" },
+    { "name": "Political Science", "faculty": "Social Sciences" },
+    { "name": "Sociology", "faculty": "Social Sciences" },
+    { "name": "Psychology", "faculty": "Social Sciences" },
+    { "name": "Mass Communication", "faculty": "Social Sciences" },
+
+    { "name": "Accounting", "faculty": "Management Sciences" },
+    { "name": "Business Administration", "faculty": "Management Sciences" },
+    { "name": "Banking and Finance", "faculty": "Management Sciences" },
+    { "name": "Marketing", "faculty": "Management Sciences" },
+    { "name": "Insurance", "faculty": "Management Sciences" },
+
+    { "name": "Educational Foundations", "faculty": "Education" },
+    { "name": "Educational Administration", "faculty": "Education" },
+    { "name": "Science Education", "faculty": "Education" },
+    { "name": "Curriculum Studies", "faculty": "Education" },
+    { "name": "Adult Education", "faculty": "Education" },
+
+    { "name": "Law", "faculty": "Law" },
+
+    { "name": "Crop Science", "faculty": "Agriculture" },
+    { "name": "Animal Science", "faculty": "Agriculture" },
+    { "name": "Soil Science", "faculty": "Agriculture" },
+    { "name": "Agricultural Extension", "faculty": "Agriculture" },
+    { "name": "Agricultural Economics", "faculty": "Agriculture" },
+
+    { "name": "Architecture", "faculty": "Environmental Sciences" },
+    { "name": "Estate Management", "faculty": "Environmental Sciences" },
+    { "name": "Urban and Regional Planning", "faculty": "Environmental Sciences" },
+    { "name": "Building Technology", "faculty": "Environmental Sciences" },
+    { "name": "Quantity Surveying", "faculty": "Environmental Sciences" },
+
+    { "name": "Medicine and Surgery", "faculty": "Medicine" },
+    { "name": "Nursing", "faculty": "Medicine" },
+    { "name": "Physiology", "faculty": "Medicine" },
+    { "name": "Anatomy", "faculty": "Medicine" },
+    { "name": "Medical Laboratory Science", "faculty": "Medicine" }
+  ],
+
   "students": [
     {
       "matric_number": "202012345",
@@ -9,7 +79,8 @@
       "department": "Computer Science",
       "email": "aisha.bello@student.university.edu",
       "dob": "2001-05-14",
-      "year_of_entry": 2020
+      "year_of_entry": 2023,
+      "level": 200
     },
     {
       "matric_number": "201934782",
@@ -20,7 +91,8 @@
       "department": "Mechanical Engineering",
       "email": "john.doe@student.university.edu",
       "dob": "2000-11-22",
-      "year_of_entry": 2019
+      "year_of_entry": 2022,
+      "level": 300
     },
     {
       "matric_number": "202134567",
@@ -31,7 +103,8 @@
       "department": "English",
       "email": "fatima.ahmed@student.university.edu",
       "dob": "2002-07-10",
-      "year_of_entry": 2021
+      "year_of_entry": 2025,
+      "level": 100
     },
     {
       "matric_number": "201845932",
@@ -42,7 +115,8 @@
       "department": "Economics",
       "email": "david.ogun@student.university.edu",
       "dob": "1999-03-05",
-      "year_of_entry": 2018
+      "year_of_entry": 2025,
+      "level": 100
     },
     {
       "matric_number": "202034879",
@@ -53,7 +127,8 @@
       "department": "Computer Science",
       "email": "maryam.yusuf@student.university.edu",
       "dob": "2001-09-30",
-      "year_of_entry": 2020
+      "year_of_entry": 2025,
+      "level": 100
     },
     {
       "matric_number": "202145698",
@@ -64,7 +139,8 @@
       "department": "Mechanical Engineering",
       "email": "emmanuel.okoro@student.university.edu",
       "dob": "2000-01-12",
-      "year_of_entry": 2021
+      "year_of_entry": 2024,
+      "level": 200
     },
     {
       "matric_number": "201954321",
@@ -75,7 +151,8 @@
       "department": "English",
       "email": "ngozi.ibe@student.university.edu",
       "dob": "2002-11-02",
-      "year_of_entry": 2019
+      "year_of_entry": 2024,
+      "level": 200
     },
     {
       "matric_number": "202134124",
@@ -86,7 +163,8 @@
       "department": "Computer Science",
       "email": "umar.sani@student.university.edu",
       "dob": "2003-04-17",
-      "year_of_entry": 2021
+      "year_of_entry": 2025,
+      "level": 100
     },
     {
       "matric_number": "202045911",
@@ -97,7 +175,8 @@
       "department": "Economics",
       "email": "chidera.obi@student.university.edu",
       "dob": "2001-08-20",
-      "year_of_entry": 2020
+      "year_of_entry": 2024,
+      "level": 200
     },
     {
       "matric_number": "201867532",
@@ -108,7 +187,8 @@
       "department": "Mechanical Engineering",
       "email": "samuel.ade@student.university.edu",
       "dob": "2000-06-06",
-      "year_of_entry": 2018
+      "year_of_entry": 2024,
+      "level": 200
     }
   ],
   "lecturers": [

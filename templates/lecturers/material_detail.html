@@ -1,0 +1,28 @@
+{% extends 'base_user.html' %}
+{% block title %}Material Details{% endblock %}
+{% block content %}
+<div class="container mt-4">
+  <h2 class="mb-3">Material Details</h2>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">{{ material.title }}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">
+        {{ material.course.code }} - {{ material.course.title }}
+      </h6>
+      <p class="mb-1"><strong>Session:</strong> {{ material.session|default:"N/A" }}</p>
+      <p class="mb-1"><strong>Uploaded By:</strong> {{ material.uploaded_by }}</p>
+      <p class="mb-1"><strong>Uploaded At:</strong> {{ material.uploaded_at|date:"Y-m-d H:i" }}</p>
+      <p class="mb-3"><strong>File:</strong>
+        <a href="{{ material.file.url }}" target="_blank" class="btn btn-sm btn-outline-secondary">
+          Download
+        </a>
+      </p>
+      <div class="mt-3">
+        <a href="{% url 'update_material' material.pk %}" class="btn btn-warning me-2">Edit</a>
+        <a href="{% url 'delete_material' material.pk %}" class="btn btn-danger me-2">Delete</a>
+        <a href="{% url 'my_materials' %}" class="btn btn-secondary">Back to My Materials</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

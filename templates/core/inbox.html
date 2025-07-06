@@ -1,43 +1,29 @@
+<!-- templates/core/inbox.html -->
 {% extends 'base_user.html' %}
-{% block title %}Send Feedback{% endblock %}
+{% load humanize %}
+{% block title %}Inbox{% endblock %}
 {% block content %}
+<div class="container mt-4">
+  <h2 class="mb-3">Inbox</h2>
 
-<div class="container mt-4 mb-5">
-  <!-- Header -->
-  <div class="mb-4">
-    <h3 class="fw-bold text-primary">
-      <i class="fas fa-paper-plane me-2"></i>Send Message / Feedback
-    </h3>
-    <p class="text-muted">We’d love to hear your thoughts or concerns.</p>
-  </div>
-
-  <!-- Form -->
-  <div class="card shadow-sm border-0">
-    <div class="card-body">
-      <form method="post" novalidate>
-        {% csrf_token %}
-        
-        {% for field in form %}
-          <div class="mb-3">
-            <label class="form-label fw-semibold">{{ field.label }}</label>
-            {{ field }}
-            {% if field.help_text %}
-              <div class="form-text">{{ field.help_text }}</div>
-            {% endif %}
-            {% for error in field.errors %}
-              <div class="text-danger small">{{ error }}</div>
-            {% endfor %}
-          </div>
-        {% endfor %}
-
-        <div class="text-end">
-          <button type="submit" class="btn btn-primary">
-            <i class="fas fa-paper-plane me-1"></i> Send Message
-          </button>
+  {% if conversations %}
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+      {% for convo in conversations %}
+        <div class="col">
+          <a href="{% url 'chat_detail' convo.user.id %}" class="text-decoration-none text-dark">
+            <div class="card shadow-sm h-100">
+              <div class="card-body">
+                <h5 class="card-title">{{ convo.user.get_full_name }}</h5>
+                <p class="card-text small text-muted">{{ convo.last_message.content|truncatewords:10 }}</p>
+                <p class="card-text"><small class="text-muted">{{ convo.last_message.sent_at|naturaltime }}</small></p>
+              </div>
+            </div>
+          </a>
         </div>
-      </form>
+      {% endfor %}
     </div>
-  </div>
+  {% else %}
+    <div class="alert alert-info">No messages yet.</div>
+  {% endif %}
 </div>
-
 {% endblock %}

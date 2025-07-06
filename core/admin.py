@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Course, Enrollment, Grade, Message, Timetable, Announcement
+from .models import *
 
 # ---------------------
 # Inline Enrollments (optional)
@@ -78,9 +78,52 @@ class TimetableAdmin(admin.ModelAdmin):
 # ---------------------
 # Announcement Admin
 # ---------------------
-@admin.register(Announcement)
+from core.forms import AdminAnnouncementAdminForm
+@admin.register(AdminAnnouncement)
 class AnnouncementAdmin(admin.ModelAdmin):
     list_display = ('title', 'target', 'faculty', 'department', 'created_at')
     list_filter = ('target', 'faculty', 'department')
     search_fields = ('title', 'content', 'posted_by__username')
     filter_horizontal = ('recipients',)
+    form = AdminAnnouncementAdminForm  # 👈 add this line
+
+    class Media:
+        js = ('admin/js/announcement_field_logic.js',)
+
+# ---------------------
+# Lecturer Announcement Admin
+# ---------------------
+@admin.register(LecturerAnnouncement)
+class LecturerAnnouncementAdmin(admin.ModelAdmin):
+    list_display = ('title', 'course', 'posted_by', 'created_at')
+    list_filter = ('course__department', 'course__semester', 'created_at')
+    search_fields = ('title', 'content', 'posted_by__username', 'course__code')
+    autocomplete_fields = ('course', 'posted_by', 'recipients')
+    filter_horizontal = ('recipients',)
+
+# ---------------------
+# Course Material Admin
+# ---------------------
+@admin.register(CourseMaterial)
+class CourseMaterialAdmin(admin.ModelAdmin):
+    list_display = ('title', 'course', 'uploaded_by', 'uploaded_at', 'session')
+    list_filter = ('course__department', 'session')
+    search_fields = ('title', 'course__code', 'uploaded_by__user__username')
+
+# ---------------------
+# Attendance Admin
+# ---------------------
+@admin.register(Attendance)
+class AttendanceAdmin(admin.ModelAdmin):
+    list_display = ('student', 'course', 'date', 'status')
+    list_filter = ('course__department', 'status', 'date')
+    search_fields = ('student__matric_number', 'course__code')
+    
+# ---------------------
+# PasswordReset Admin
+# ---------------------
+@admin.register(PasswordResetRequest)
+class PasswordResetRequestAdmin(admin.ModelAdmin):
+    list_display = ('matric_number', 'last_name', 'faculty', 'department', 'submitted_at')
+    search_fields = ('matric_number', 'first_name', 'last_name', 'faculty', 'department')
+    list_filter = ('faculty', 'department', 'year_of_entry')

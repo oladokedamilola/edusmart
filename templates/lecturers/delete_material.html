@@ -1,0 +1,16 @@
+{% extends 'base_user.html' %}
+{% block title %}Delete Course Material{% endblock %}
+{% block content %}
+<div class="container mt-4">
+  <h2 class="mb-3 text-danger">Delete Course Material</h2>
+  <div class="alert alert-warning">
+    <p>Are you sure you want to delete the material titled <strong>"{{ material.title }}"</strong>?</p>
+    <p>This action cannot be undone.</p>
+  </div>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+    <a href="{% url 'material_detail' material.pk %}" class="btn btn-secondary ms-2">Cancel</a>
+  </form>
+</div>
+{% endblock %}

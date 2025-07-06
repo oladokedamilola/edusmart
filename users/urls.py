@@ -9,4 +9,7 @@ urlpatterns = [
 
     path('update-profile-image/', views.update_profile_image, name='update_profile_image'),
     path('logout/', views.logout_view, name='logout'),
+
+path('profile/', views.view_profile, name='view_profile'),
+
 ]

@@ -1,12 +1,47 @@
 {% extends 'base_user.html' %}
 {% block title %}Upload Course Material{% endblock %}
+
 {% block content %}
 <div class="container mt-4">
   <h2 class="mb-3">Upload Course Material</h2>
-  <form method="post" enctype="multipart/form-data">
+
+  {% if has_courses %}
+  <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
     {% csrf_token %}
-    {{ form.as_p }}
+    <div class="mb-3">
+      <label for="{{ form.course.id_for_label }}" class="form-label">Course</label>
+      {{ form.course }}
+      {% if form.course.errors %}
+        <div class="invalid-feedback d-block">
+          {{ form.course.errors.0 }}
+        </div>
+      {% endif %}
+    </div>
+    <div class="mb-3">
+      <label for="{{ form.title.id_for_label }}" class="form-label">Title</label>
+      {{ form.title }}
+      {% if form.title.errors %}
+        <div class="invalid-feedback d-block">
+          {{ form.title.errors.0 }}
+        </div>
+      {% endif %}
+    </div>
+    <div class="mb-3">
+      <label for="{{ form.file.id_for_label }}" class="form-label">File</label>
+      {{ form.file }}
+      {% if form.file.errors %}
+        <div class="invalid-feedback d-block">
+          {{ form.file.errors.0 }}
+        </div>
+      {% endif %}
+    </div>
     <button type="submit" class="btn btn-primary">Upload</button>
   </form>
+  {% else %}
+  <div class="alert alert-warning p-4 mt-3 text-center">
+    <h5>You have not been assigned any courses yet.</h5>
+    <p class="mb-0">Once a course is assigned to you, you’ll be able to upload materials here.</p>
+  </div>
+  {% endif %}
 </div>
 {% endblock %}

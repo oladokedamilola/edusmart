@@ -14,6 +14,8 @@ class PreexistingStudent(models.Model):
     email = models.EmailField()
     dob = models.DateField()
     year_of_entry = models.IntegerField()
+    level = models.IntegerField()
+
 
     def __str__(self):
         return self.matric_number

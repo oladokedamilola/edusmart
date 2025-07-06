@@ -1,0 +1,65 @@
+{% extends 'base_user.html' %}
+{% block title %}Notifications{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <div class="mb-4">
+    <h2 class="fw-bold text-primary">
+      <i class="fas fa-bell me-2"></i>Notifications
+    </h2>
+    <p class="text-muted">Here are your latest updates and activity alerts.</p>
+  </div>
+
+  {% if notifications %}
+    {% for note in notifications %}
+      <a href="{{ note.url|default:'#' }}" class="text-decoration-none text-dark">
+        <div class="card mb-3 shadow-sm border-0 {{ note.is_read|yesno:'bg-light, bg-white' }}">
+          <div class="card-body d-flex justify-content-between align-items-start">
+            <div>
+              <p class="mb-1 fw-medium">{{ note.message }}</p>
+              <small class="text-muted">{{ note.timestamp|date:"M d, Y \\a\\t h:i A" }}</small>
+            </div>
+            {% if not note.is_read %}
+              <span class="badge bg-primary rounded-pill">New</span>
+            {% endif %}
+          </div>
+        </div>
+      </a>
+    {% endfor %}
+
+    {% if page_obj.has_previous or page_obj.has_next %}
+    <!-- Pagination -->
+    <nav class="d-flex justify-content-center mt-4">
+      <ul class="pagination">
+        {% if page_obj.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+          </li>
+        {% else %}
+          <li class="page-item disabled"><span class="page-link">Previous</span></li>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+          <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+          </li>
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+          </li>
+        {% else %}
+          <li class="page-item disabled"><span class="page-link">Next</span></li>
+        {% endif %}
+      </ul>
+    </nav>
+  {% endif %}
+
+  {% else %}
+    <div class="alert alert-info text-center">
+      <i class="fas fa-info-circle me-2"></i>You have no notifications.
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

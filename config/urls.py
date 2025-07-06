@@ -15,15 +15,19 @@ urlpatterns = [
     path('send-message/', send_message, name='send_message'),
     path('inbox/', inbox, name='inbox'),
 
+    path('notifications/', notifications_view, name='notifications'),
+    path('forgot_password/', forgot_password_view, name='forgot_password'),
+
+
     # Admin URLs
-    path('admin/assign-courses/', assign_courses_to_lecturer, name='assign_courses'),
-    path('admin/post-announcement/', post_announcement, name='post_announcement'),
-    path('admin/grades/pending/', pending_grades, name='pending-grades'),
-    path('admin/grades/approve/<int:grade_id>/', approve_grade, name='approve-grade'),
-    path('admin/dashboard/', admin_dashboard, name='admin-dashboard'),
-    path('admin/timetable/', timetable_manager, name='timetable-manager'),
-    path('admin/courses/', course_list, name='course-list'),
-    path('admin/student-report/', student_report, name='student-report'),
+    path('admin-assign-courses/', assign_courses_to_lecturer, name='assign_courses'),
+    path('admin-post-announcement/', post_announcement, name='post_announcement'),
+    path('admin-grades/pending/', pending_grades, name='pending-grades'),
+    path('admin-grades/approve/<int:grade_id>/', approve_grade, name='approve-grade'),
+    path('admin-dashboard/', admin_dashboard, name='admin-dashboard'),
+    path('admin-timetable/', timetable_manager, name='timetable-manager'),
+    path('admin-courses/', course_list, name='course-list'),
+    path('admin-student-report/', student_report, name='student-report'),
 
 
 

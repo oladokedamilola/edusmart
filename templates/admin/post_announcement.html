@@ -1,10 +1,80 @@
 {% extends 'base_admin.html' %}
 {% block title %}Post Announcement{% endblock %}
+
 {% block content %}
-<h2 class="mb-4">Post a New Announcement</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit" class="btn btn-primary">Post Announcement</button>
-</form>
+<div class="container mt-4">
+
+  <div class="bg-white p-4 rounded shadow mx-auto col-md-10 col-lg-7">
+    <!-- Centered Heading -->
+    <div class="text-center mb-4">
+      <h2 class="mb-0">Post a New Announcement</h2>
+    </div>
+
+    <form method="post">
+      {% csrf_token %}
+
+      <!-- Title -->
+      <div class="mb-3">
+        <label for="{{ form.title.id_for_label }}" class="form-label">{{ form.title.label }}</label>
+        {{ form.title }}
+        {% if form.title.errors %}
+          <div class="text-danger">{{ form.title.errors }}</div>
+        {% endif %}
+      </div>
+
+      <!-- Content -->
+      <div class="mb-3">
+        <label for="{{ form.content.id_for_label }}" class="form-label">{{ form.content.label }}</label>
+        {{ form.content }}
+        {% if form.content.errors %}
+          <div class="text-danger">{{ form.content.errors }}</div>
+        {% endif %}
+      </div>
+
+      <!-- Target -->
+      <div class="mb-3">
+        <label for="{{ form.target.id_for_label }}" class="form-label">{{ form.target.label }}</label>
+        {{ form.target }}
+        {% if form.target.errors %}
+          <div class="text-danger">{{ form.target.errors }}</div>
+        {% endif %}
+      </div>
+
+      <!-- Faculty -->
+      <div class="mb-3">
+        <label for="{{ form.faculty.id_for_label }}" class="form-label">{{ form.faculty.label }}</label>
+        {{ form.faculty }}
+        {% if form.faculty.errors %}
+          <div class="text-danger">{{ form.faculty.errors }}</div>
+        {% endif %}
+      </div>
+
+      <!-- Department -->
+      <div class="mb-3">
+        <label for="{{ form.department.id_for_label }}" class="form-label">{{ form.department.label }}</label>
+        {{ form.department }}
+        {% if form.department.errors %}
+          <div class="text-danger">{{ form.department.errors }}</div>
+        {% endif %}
+      </div>
+
+      <!-- Recipients -->
+      <div class="mb-3">
+        <label class="form-label d-block">{{ form.recipients.label }}</label>
+        {% for checkbox in form.recipients %}
+          <div class="form-check">
+            {{ checkbox.tag }}
+            <label class="form-check-label" for="{{ checkbox.id_for_label }}">{{ checkbox.choice_label }}</label>
+          </div>
+        {% endfor %}
+        {% if form.recipients.errors %}
+          <div class="text-danger">{{ form.recipients.errors }}</div>
+        {% endif %}
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100">Post Announcement</button>
+    </form>
+  </div>
+
+</div>
 {% endblock %}

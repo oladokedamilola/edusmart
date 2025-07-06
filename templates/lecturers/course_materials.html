@@ -1,41 +1,81 @@
 {% extends 'base_user.html' %}
 {% block title %}Course Materials{% endblock %}
+
 {% block content %}
 <div class="container mt-4">
-  <h2>Materials for {{ course.code }} - {{ course.title }}</h2>
+  <h3 class="mb-4">My Course Materials</h3>
 
-  <form method="get" class="row g-2 mb-3">
-  <div class="col-md-4">
-    <select name="type" class="form-select">
-      <option value="">Filter by Type</option>
-      <option value="pdf" {% if file_type == 'pdf' %}selected{% endif %}>PDF</option>
-      <option value="pptx" {% if file_type == 'pptx' %}selected{% endif %}>PowerPoint</option>
-      <option value="docx" {% if file_type == 'docx' %}selected{% endif %}>Word</option>
-    </select>
-  </div>
-  <div class="col-md-4">
-    <input type="text" name="session" class="form-control" placeholder="e.g. 2024/2025" value="{{ session_filter }}">
-  </div>
-  <div class="col-md-4">
-    <button type="submit" class="btn btn-outline-primary">Apply Filters</button>
-  </div>
-</form>
-
-
-  {% if materials %}
-  <ul class="list-group mt-3">
-    {% for material in materials %}
-    <li class="list-group-item d-flex justify-content-between align-items-center">
-      <div>
-        <strong>{{ material.title }}</strong><br>
-        <small>Uploaded on {{ material.uploaded_at|date:"M d, Y" }}</small>
+  {% if courses %}
+    <!-- Filters (global) -->
+    <form method="get" class="row g-2 mb-4">
+      <div class="col-md-4">
+        <select name="type" class="form-select">
+          <option value="">Filter by File Type</option>
+          <option value="pdf" {% if file_type == 'pdf' %}selected{% endif %}>PDF</option>
+          <option value="pptx" {% if file_type == 'pptx' %}selected{% endif %}>PowerPoint</option>
+          <option value="docx" {% if file_type == 'docx' %}selected{% endif %}>Word</option>
+        </select>
       </div>
-      <a href="{{ material.file.url }}" class="btn btn-sm btn-outline-primary" download>Download</a>
-    </li>
+      <div class="col-md-4">
+        <input type="text" name="session" class="form-control" placeholder="e.g. 2024/2025" value="{{ session_filter }}">
+      </div>
+      <div class="col-md-4 d-grid">
+        <button type="submit" class="btn btn-outline-primary">Apply Filters</button>
+      </div>
+    </form>
+
+    {% for course in courses %}
+    <div class="card mb-5 shadow-sm">
+      <div class="row g-0">
+        <!-- Left Column: Course Details -->
+        <div class="col-md-4 bg-light p-3">
+          <h5>{{ course.title }}</h5>
+          <p class="text-muted">{{ course.code }} | {{ course.get_semester_display }} | {{ course.level }} Level</p>
+          <p><strong>Type:</strong> {{ course.get_course_type_display }}</p>
+          <p><strong>Unit:</strong> {{ course.unit }}</p>
+          <p><strong>Department:</strong> {{ course.department }}</p>
+          <p><strong>Faculty:</strong> {{ course.faculty }}</p>
+          <p><strong>Session:</strong> {{ course.session }}</p>
+          {% if course.description %}
+            <hr>
+            <p><strong>Description:</strong><br>{{ course.description }}</p>
+          {% endif %}
+        </div>
+
+        <!-- Right Column: Materials -->
+        <div class="col-md-8 p-3">
+          <h6 class="mb-3">Materials</h6>
+          {% with materials=course_materials.course %}
+            {% if materials %}
+              <ul class="list-group">
+                {% for material in materials %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <div>
+                    <strong>{{ material.title }}</strong><br>
+                    <small class="text-muted">Uploaded on {{ material.uploaded_at|date:"M d, Y" }}</small>
+                    {% if material.session %}
+                      <br><small class="text-muted">Session: {{ material.session }}</small>
+                    {% endif %}
+                  </div>
+                  <a href="{{ material.file.url }}" class="btn btn-sm btn-outline-primary" download>
+                    <i class="fas fa-download"></i> Download
+                  </a>
+                </li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <div class="alert alert-info">No materials uploaded yet for this course.</div>
+            {% endif %}
+          {% endwith %}
+        </div>
+      </div>
+    </div>
     {% endfor %}
-  </ul>
   {% else %}
-    <div class="alert alert-info mt-3">No materials uploaded yet for this course.</div>
+    <div class="alert alert-warning text-center p-5">
+      <h4>No course has been assigned to you yet.</h4>
+      <p class="mb-0">Once a course is assigned, its materials will appear here.</p>
+    </div>
   {% endif %}
 </div>
 {% endblock %}

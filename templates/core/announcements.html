@@ -3,7 +3,6 @@
 {% block content %}
 
 <div class="container mt-4">
-  <!-- Page Heading -->
   <div class="mb-4">
     <h2 class="fw-bold text-primary">
       <i class="fas fa-bullhorn me-2"></i>Announcements
@@ -11,27 +10,147 @@
     <p class="text-muted">Stay up to date with the latest news and updates.</p>
   </div>
 
-  <!-- Announcement List -->
   {% if announcements %}
     {% for ann in announcements %}
-      <div class="card shadow-sm mb-4 border-0">
+      <div class="card shadow-sm mb-4 border-0 announcement-card" data-id="{{ forloop.counter }}">
         <div class="card-body">
+
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <span class="badge {% if ann.is_admin %}bg-primary{% else %}bg-secondary{% endif %}">
+              {% if ann.is_admin %}
+                Admin Announcement
+              {% else %}
+                Lecturer Announcement
+              {% endif %}
+            </span>
+
+            {% if ann.is_lecturer %}
+              <small class="text-muted">
+                <i class="fas fa-book me-1"></i>
+                {{ ann.course.code }} - {{ ann.course.title }}
+              </small>
+            {% endif %}
+          </div>
+
           <h5 class="card-title fw-semibold">{{ ann.title }}</h5>
-          <p class="card-text mt-2">{{ ann.content }}</p>
-          <div class="text-end">
+
+          <p class="card-text mt-2 announcement-content" id="content-{{ forloop.counter }}">
+            <!-- truncated preview -->
+            <span class="truncated">{{ ann.content|truncatechars:200 }}</span>
+
+            {% if ann.content|length > 200 %}
+              <!-- full text (hidden by default) -->
+              <span class="d-none full-content">{{ ann.content }}</span>
+              <!-- toggle link -->
+              <a href="#" class="see-more text-decoration-none fw-semibold" data-target="{{ forloop.counter }}">See More</a>
+            {% endif %}
+          </p>
+
+          <div class="text-end mt-3">
             <small class="text-muted">
-              <i class="fas fa-user me-1"></i>{{ ann.posted_by.username }} &middot; 
-              <i class="fas fa-clock me-1"></i>{{ ann.created_at|date:"M d, Y H:i" }}
+              <i class="fas fa-user me-1"></i>{{ ann.posted_by.get_full_name|default:ann.posted_by.username }}
+              &middot;
+              <i class="fas fa-clock me-1"></i>{{ ann.created_at|date:"M d, Y \\a\\t h:i A" }}
             </small>
           </div>
         </div>
       </div>
     {% endfor %}
+
+    <!-- Pagination Controls -->
+     {% if page_obj.has_previous or page_obj.has_next %}
+      <nav class="d-flex justify-content-center">
+        <ul class="pagination">
+          {% if page_obj.has_previous %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            </li>
+          {% else %}
+            <li class="page-item disabled"><span class="page-link">Previous</span></li>
+          {% endif %}
+
+          {% for num in page_obj.paginator.page_range %}
+            <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+              <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+            </li>
+          {% endfor %}
+
+          {% if page_obj.has_next %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+            </li>
+          {% else %}
+            <li class="page-item disabled"><span class="page-link">Next</span></li>
+          {% endif %}
+        </ul>
+      </nav>
+      {% endif %}
   {% else %}
     <div class="alert alert-info text-center">
       <i class="fas fa-info-circle me-2"></i>No announcements have been posted yet.
     </div>
   {% endif %}
 </div>
+
+<!-- Toggle Script -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+
+    // Event delegation for both see‑more and see‑less links
+    document.body.addEventListener('click', function (e) {
+
+      /* ---------- EXPAND ---------- */
+      if (e.target.classList.contains('see-more')) {
+        e.preventDefault();
+        const id = e.target.dataset.target;
+
+        /* Collapse every announcement first */
+        document.querySelectorAll('.announcement-content').forEach(content => {
+          const full = content.querySelector('.full-content');
+          const seeMore = content.querySelector('.see-more');
+          const seeLess = content.querySelector('.see-less');
+
+          if (full) full.classList.add('d-none');            // hide full text
+          if (seeMore) seeMore.classList.remove('d-none');   // show “See More”
+          if (seeLess) seeLess.remove();                     // remove any existing “See Less”
+        });
+
+        /* Expand the selected announcement */
+        const content = document.getElementById('content-' + id);
+        const full = content.querySelector('.full-content');
+        const seeMore = content.querySelector('.see-more');
+
+        if (full && seeMore) {
+          full.classList.remove('d-none');   // show full text
+          seeMore.classList.add('d-none');   // hide “See More”
+
+          // Dynamically create “See Less”
+          const seeLess = document.createElement('a');
+          seeLess.href = '#';
+          seeLess.className = 'see-less text-decoration-none fw-semibold ms-2';
+          seeLess.dataset.target = id;
+          seeLess.textContent = 'See Less';
+          content.appendChild(seeLess);
+        }
+      }
+
+      /* ---------- COLLAPSE ---------- */
+      if (e.target.classList.contains('see-less')) {
+        e.preventDefault();
+        const id = e.target.dataset.target;
+
+        const content = document.getElementById('content-' + id);
+        const full = content.querySelector('.full-content');
+        const seeMore = content.querySelector('.see-more');
+
+        if (full && seeMore) {
+          full.classList.add('d-none');        // hide full text
+          seeMore.classList.remove('d-none');  // show “See More”
+          e.target.remove();                   // remove “See Less” link
+        }
+      }
+    });
+  });
+</script>
 
 {% endblock %}

@@ -1,12 +1,73 @@
 {% extends 'base_user.html' %}
 {% block title %}Post Course Announcement{% endblock %}
 {% block content %}
+
 <div class="container mt-4">
-  <h2>Post Announcement to Students</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-success">Post</button>
-  </form>
+  <!-- Page Heading -->
+  <div class="mb-4">
+    <h2 class="fw-bold text-primary">
+      <i class="fas fa-bullhorn me-2"></i>Post Course Announcement
+    </h2>
+    <p class="text-muted">Send an announcement to students enrolled in your course.</p>
+  </div>
+
+  {% if has_courses %}
+  <!-- Form Card -->
+  <div class="card shadow-sm border-0">
+    <div class="card-body">
+      <form method="post" novalidate>
+        {% csrf_token %}
+
+        <!-- Title -->
+        <div class="mb-3">
+          <label for="id_title" class="form-label fw-semibold">Title</label>
+          <input type="text" name="title" class="form-control" id="id_title"
+                 value="{{ form.title.value|default_if_none:'' }}">
+          {% if form.title.errors %}
+            <div class="text-danger small mt-1">{{ form.title.errors.0 }}</div>
+          {% endif %}
+        </div>
+
+        <!-- Content -->
+        <div class="mb-3">
+          <label for="id_content" class="form-label fw-semibold">Content</label>
+          <textarea name="content" class="form-control" id="id_content" rows="5">{{ form.content.value|default_if_none:'' }}</textarea>
+          {% if form.content.errors %}
+            <div class="text-danger small mt-1">{{ form.content.errors.0 }}</div>
+          {% endif %}
+        </div>
+
+        <!-- Course -->
+        <div class="mb-3">
+          <label for="id_course" class="form-label fw-semibold">Course</label>
+          <select name="course" class="form-select" id="id_course">
+            <option value="">Select a course</option>
+            {% for option in form.course.field.queryset %}
+              <option value="{{ option.id }}" {% if form.course.value|stringformat:"s" == option.id|stringformat:"s" %}selected{% endif %}>
+                {{ option.code }} - {{ option.title }}
+              </option>
+            {% endfor %}
+          </select>
+          {% if form.course.errors %}
+            <div class="text-danger small mt-1">{{ form.course.errors.0 }}</div>
+          {% endif %}
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-success w-100">
+          <i class="fas fa-paper-plane me-1"></i> Post Announcement
+        </button>
+      </form>
+    </div>
+  </div>
+
+  {% else %}
+  <!-- No Courses Assigned Message -->
+  <div class="alert alert-warning text-center p-5">
+    <h4>You haven't been assigned to any course yet.</h4>
+    <p class="mb-0">Once a course is assigned to you, you'll be able to post announcements here.</p>
+  </div>
+  {% endif %}
 </div>
+
 {% endblock %}

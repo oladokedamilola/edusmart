@@ -5,6 +5,7 @@ class CustomUser(AbstractUser):
     USER_TYPE_CHOICES = (
         ('student', 'Student'),
         ('lecturer', 'Lecturer'),
+        ('admin', 'Admin'),
     )
     user_type = models.CharField(max_length=20, choices=USER_TYPE_CHOICES)
     profile_image = models.ImageField(upload_to='profile_images/', null=True, blank=True)

@@ -1,0 +1,106 @@
+{% extends "base_user.html" %}
+{% block title %}My Profile{% endblock %}
+{% block content %}
+
+<div class="container mt-4">
+  <h2 class="fw-bold text-primary mb-4">
+    <i class="fas fa-user-circle me-2"></i>My Profile
+  </h2>
+
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <div class="row g-4">
+
+        <!-- User Type -->
+        <div class="col-md-6">
+          <label class="fw-semibold text-muted">User Type</label>
+          <div class="text-capitalize">{{ user.user_type }}</div>
+        </div>
+
+        {% if user_type == 'student' %}
+          <!-- Username / Matric Number -->
+          <div class="col-md-6">
+            <label class="fw-semibold text-muted">Username (Matric Number)</label>
+            <div>{{ profile.matric_number }}</div>
+          </div>
+
+          <!-- Email -->
+          <div class="col-md-6">
+            <label class="fw-semibold text-muted">Email</label>
+            <div>{{ profile.email }}</div>
+          </div>
+
+          <!-- Full Name -->
+          <div class="col-md-6">
+            <label class="fw-semibold text-muted">Full Name</label>
+            <div>{{ profile.first_name }} {{ profile.middle_name }} {{ profile.last_name }}</div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="fw-semibold text-muted">Faculty</label>
+            <div>{{ profile.faculty }}</div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="fw-semibold text-muted">Department</label>
+            <div>{{ profile.department }}</div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="fw-semibold text-muted">Date of Birth</label>
+            <div>{{ profile.dob }}</div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="fw-semibold text-muted">Year of Entry</label>
+            <div>{{ profile.year_of_entry }}</div>
+          </div>
+
+        {% elif user_type == 'lecturer' %}
+          <!-- Username / Staff ID -->
+          <div class="col-md-6">
+            <label class="fw-semibold text-muted">Username (Staff ID)</label>
+            <div>{{ profile.staff_id }}</div>
+          </div>
+
+          <!-- Email -->
+          <div class="col-md-6">
+            <label class="fw-semibold text-muted">Email</label>
+            <div>{{ profile.email }}</div>
+          </div>
+
+          <!-- Full Name -->
+          <div class="col-md-6">
+            <label class="fw-semibold text-muted">Full Name</label>
+            <div>{{ profile.first_name }} {{ profile.middle_name }} {{ profile.last_name }}</div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="fw-semibold text-muted">Faculty</label>
+            <div>{{ profile.faculty }}</div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="fw-semibold text-muted">Department</label>
+            <div>{{ profile.department }}</div>
+          </div>
+
+        {% else %}
+          <!-- Admin (Only CustomUser data) -->
+          <div class="col-md-6">
+            <label class="fw-semibold text-muted">Username</label>
+            <div>{{ user.username }}</div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="fw-semibold text-muted">Email</label>
+            <div>{{ user.email }}</div>
+          </div>
+        {% endif %}
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

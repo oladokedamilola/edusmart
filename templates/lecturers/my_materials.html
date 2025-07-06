@@ -1,0 +1,45 @@
+{# filepath: templates/lecturers/my_materials.html #}
+{% extends 'base_user.html' %}
+{% block title %}My Uploaded Materials{% endblock %}
+{% block content %}
+<div class="container mt-4">
+  <h2 class="mb-3">My Uploaded Materials</h2>
+  {% if materials %}
+    <div class="table-responsive">
+      <table class="table table-striped align-middle">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Course</th>
+            <th>Uploaded At</th>
+            <th>File</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for material in materials %}
+            <tr>
+              <td>{{ material.title }}</td>
+              <td>{{ material.course.code }} - {{ material.course.title }}</td>
+              <td>{{ material.uploaded_at|date:"Y-m-d H:i" }}</td>
+              <td>
+                <a href="{{ material.file.url }}" target="_blank" class="btn btn-sm btn-outline-secondary">
+                  Download
+                </a>
+              </td>
+              <td>
+                <a href="{% url 'material_detail' material.pk %}" class="btn btn-sm btn-info">View</a>
+                <a href="{% url 'update_material' material.pk %}" class="btn btn-sm btn-warning">Edit</a>
+                <a href="{% url 'delete_material' material.pk %}" class="btn btn-sm btn-danger">Delete</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="alert alert-info">You have not uploaded any materials yet.</div>
+  {% endif %}
+  <a href="{% url 'upload_material' %}" class="btn btn-primary mt-3">Upload New Material</a>
+</div>
+{% endblock %}

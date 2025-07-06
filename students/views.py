@@ -4,7 +4,6 @@ from users.models import CustomUser
 from core.models import *
 from users.decorators import student_required
 from collections import defaultdict
-from core.models import Announcement
 from django.db.models import Q
 from core.utils import *
 
@@ -20,44 +19,66 @@ def student_dashboard(request):
 @login_required
 @student_required
 def course_registration(request):
-    if request.user.user_type != 'student':
-        return redirect('login')
-
     student = request.user.preexistingstudent
-    # Filtering logic
-    available_courses = Course.objects.filter(
-        level=student.year_of_entry
-    ).filter(
-        models.Q(course_type='C', faculty=student.faculty, department=student.department) |
-        models.Q(course_type='R', department=student.department) |
-        models.Q(course_type='E')  # Elective is open to all
-    )
-    registered_courses = Enrollment.objects.filter(student=student).values_list('course__id', flat=True)
+    print("🔍 Logged in student:", student)
+    print("🔍 Student faculty (raw):", student.faculty)
+    print("🔍 Student department (raw):", student.department)
+    print("🔍 Student year of entry:", student.year_of_entry)
+    print("🔍 Student level:", student.level)
 
-    if request.method == 'POST':
-        course_id = request.POST.get('course_id')
-        if course_id and int(course_id) not in registered_courses:
-            course = Course.objects.get(id=course_id)
-            Enrollment.objects.create(student=student, course=course)
-            return redirect('course_registration')
-        
+    faculty_obj, department_obj = get_faculty_and_department(student.faculty, student.department)
+    print("✅ Matched Faculty object:", faculty_obj)
+    print("✅ Matched Department object:", department_obj)
+
+    if not faculty_obj or not department_obj:
+        print("❌ Faculty or Department match failed.")
+        return render(request, 'students/course_registration.html', {
+            'available_courses': [],
+            'registered_courses': [],
+            'error': 'Faculty or department mapping failed. Please contact admin.'
+        })
+
+    available_courses = Course.objects.filter(
+        level=student.level
+    ).filter(
+        models.Q(course_type='C', faculty=faculty_obj, department=department_obj) |
+        models.Q(course_type='R', department=department_obj) |
+        models.Q(course_type='E')
+    )
+
+    print("📚 Available courses count:", available_courses.count())
+    for c in available_courses:
+        print(f"➡️ {c.code} - {c.title} | Type: {c.course_type} | Dept: {c.department} | Faculty: {c.faculty}")
+
+    registered_courses = Enrollment.objects.filter(student=student).values_list('course__id', flat=True)
+    print("✅ Registered course IDs:", list(registered_courses))
+
     if request.method == 'POST':
         course_id = request.POST.get('course_id')
         action = request.POST.get('action')
+        print("📝 POST Action:", action, "Course ID:", course_id)
 
-        course = Course.objects.get(id=course_id)
+        try:
+            course = Course.objects.get(id=course_id)
 
-        if action == 'register' and int(course_id) not in registered_courses:
-            Enrollment.objects.create(student=student, course=course)
-        elif action == 'drop':
-            Enrollment.objects.filter(student=student, course=course).delete()
+            if action == 'register' and int(course_id) not in registered_courses:
+                Enrollment.objects.create(student=student, course=course)
+                print("✅ Course registered:", course)
+            elif action == 'drop':
+                Enrollment.objects.filter(student=student, course=course).delete()
+                print("❎ Course dropped:", course)
 
+        except Course.DoesNotExist:
+            print("❌ Course not found with ID:", course_id)
+
+        return redirect('course_registration')
 
     context = {
         'available_courses': available_courses,
         'registered_courses': registered_courses,
     }
     return render(request, 'students/course_registration.html', context)
+
 
 @login_required
 @student_required
